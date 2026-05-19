@@ -133,6 +133,55 @@ export async function findPersonsByPlatformHandle(
   return ok((result.data ?? []) as Person[]);
 }
 
+/**
+ * Find Persons whose `canonical_name` is similar to the supplied name. Backed
+ * by the trigram index `idx_person_name_trgm` (SPEC.md §3.2.1). Returns at
+ * most `limit` candidates. The match is intentionally loose — the resolver
+ * scorer filters precisely with Jaro–Winkler downstream (SPEC.md §4.2).
+ *
+ * Matches active rows only so soft-deleted (merged) Persons never surface as
+ * candidates.
+ *
+ * @example
+ * ```ts
+ * const r = await findPersonsByNameTrigram('Álvaro García', 20);
+ * ```
+ */
+export async function findPersonsByNameTrigram(
+  name: string,
+  limit: number,
+): Promise<Result<Person[], AtlasError>> {
+  const c = svc();
+  if (isErr(c)) return c;
+  const trimmed = name.trim();
+  if (trimmed.length === 0) return ok([]);
+  // Split on whitespace and search each meaningful token via ILIKE. The
+  // trigram GIN index (idx_person_name_trgm) accelerates ILIKE on each
+  // token; precise Jaro-Winkler scoring is the resolver's job downstream.
+  const tokens = trimmed.split(/\s+/).filter((t) => t.length >= 2);
+  const queryTokens = tokens.length > 0 ? tokens : [trimmed];
+  // PostgREST `.or()` parses commas as clause separators and parens as
+  // grouping. Any token containing those characters (very common in Luma
+  // organizer names like "X, Inc." or "Company (US)") corrupts the
+  // expression and either crashes or quietly misroutes the query. Sanitize
+  // by stripping the dangerous characters; the trigram index still
+  // accelerates the remaining ILIKE clauses, and the resolver re-scores
+  // with the full Jaro-Winkler signal on the unsanitized name afterwards.
+  const sanitize = (t: string): string =>
+    t.replace(/[,()*"`'\\:]/g, '').trim();
+  const safeTokens = queryTokens.map(sanitize).filter((t) => t.length >= 2);
+  if (safeTokens.length === 0) return ok([]);
+  const orExpr = safeTokens.map((t) => `canonical_name.ilike.%${t}%`).join(',');
+  const result = await c.value
+    .from('person')
+    .select()
+    .eq('is_active', true)
+    .or(orExpr)
+    .limit(limit);
+  if (result.error) return err(toQueryError('findPersonsByNameTrigram', result.error, { name }));
+  return ok((result.data ?? []) as Person[]);
+}
+
 /** Find Persons currently employed at the given Company. */
 export async function findPersonsByEmployer(
   companyId: UUID,

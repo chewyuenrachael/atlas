@@ -74,12 +74,21 @@ export class AtlasError extends Error {
 
   /** Serialize for structured logging. Drops `stack` for brevity. */
   toJSON(): Record<string, unknown> {
-    return {
+    const out: Record<string, unknown> = {
       name: this.name,
       code: this.code,
       message: this.message,
       context: this.context,
     };
+    if (this.cause !== undefined) {
+      // Surface the immediate cause so wrapped errors aren't opaque in logs.
+      // We only walk one level to avoid runaway depth from circular causes.
+      const c = this.cause;
+      if (c instanceof AtlasError) out['cause'] = c.toJSON();
+      else if (c instanceof Error) out['cause'] = { name: c.name, message: c.message };
+      else out['cause'] = { value: String(c) };
+    }
+    return out;
   }
 }
 

@@ -5,4 +5,9 @@
  * one Inngest function per file, file name matches the function id.
  */
 export { inngest, INNGEST_APP_ID } from './inngest-client.js';
-export { fetchLumaEvents } from './luma-fetch.js';
+export {
+  lumaIngestPipeline,
+  runLumaIngest,
+  type LumaIngestDeps,
+  type LumaIngestStats,
+} from './luma-ingest-pipeline.js';

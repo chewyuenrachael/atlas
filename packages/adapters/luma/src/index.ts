@@ -11,6 +11,7 @@ export {
   type LumaAdapterOptions,
   type RawLumaStore,
 } from './adapter.js';
+export { SupabaseRawLumaStore } from './store-supabase.js';
 export { normalizeLumaEvent } from './normalizer.js';
 export {
   scrapeCommunityPage,

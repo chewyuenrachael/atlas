@@ -21,9 +21,16 @@
     "format:check": "prettier --check .",
     "db:migrate": "node --env-file=.env --import tsx packages/db/src/migrate.ts",
     "db:rollback": "node --env-file=.env --import tsx packages/db/src/rollback.ts",
-    "db:smoke": "RUN_SMOKE_TESTS=1 node --env-file=.env node_modules/vitest/vitest.mjs run packages/db/src/__tests__/smoke.test.ts"
+    "db:smoke": "RUN_SMOKE_TESTS=1 node --env-file=.env node_modules/vitest/vitest.mjs run packages/db/src/__tests__/smoke.test.ts",
+    "backfill:luma": "node --env-file=.env --import tsx scripts/backfill-luma.ts",
+    "verify:phase-1": "node --env-file=.env --import tsx scripts/verify-phase-1.ts"
   },
   "devDependencies": {
+    "@atlas/adapter-luma": "workspace:*",
+    "@atlas/core": "workspace:*",
+    "@atlas/db": "workspace:*",
+    "@atlas/intelligence-identity-resolution": "workspace:*",
+    "@atlas/workflows-shared": "workspace:*",
     "@eslint/js": "^9.13.0",
     "@types/node": "^20.16.11",
     "@vitest/coverage-v8": "^1.6.0",

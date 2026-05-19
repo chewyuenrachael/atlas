@@ -8,6 +8,21 @@ importers:
 
   .:
     devDependencies:
+      '@atlas/adapter-luma':
+        specifier: workspace:*
+        version: link:packages/adapters/luma
+      '@atlas/core':
+        specifier: workspace:*
+        version: link:packages/core
+      '@atlas/db':
+        specifier: workspace:*
+        version: link:packages/db
+      '@atlas/intelligence-identity-resolution':
+        specifier: workspace:*
+        version: link:packages/intelligence/identity-resolution
+      '@atlas/workflows-shared':
+        specifier: workspace:*
+        version: link:packages/workflows/_shared
       '@eslint/js':
         specifier: ^9.13.0
         version: 9.39.4
@@ -350,6 +365,9 @@ importers:
       '@atlas/db':
         specifier: workspace:*
         version: link:../../db
+      '@atlas/intelligence-identity-resolution':
+        specifier: workspace:*
+        version: link:../../intelligence/identity-resolution
       inngest:
         specifier: ^3.27.0
         version: 3.54.2(@opentelemetry/core@2.7.1(@opentelemetry/api@1.9.1))(next@14.2.15(@opentelemetry/api@1.9.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(zod@4.4.3)
