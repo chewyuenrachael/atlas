@@ -1,0 +1,87 @@
+[
+  {
+    "recordType": "event",
+    "sourcePlatform": "luma",
+    "sourceRecordId": "cursor-sf-jun",
+    "payload": {
+      "luma_event_id": "cursor-sf-jun",
+      "title": "Cafe Cursor SF — June Edition",
+      "description": "Monthly Cafe Cursor for SF Bay Area builders.",
+      "starts_at": "2026-06-16T01:00:00.000Z",
+      "ends_at": "2026-06-16T04:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "venue_name": "Cursor HQ",
+      "venue_address": "548 Market Street",
+      "venue_city": "San Francisco",
+      "venue_country": "United States",
+      "event_format": "in_person",
+      "registered_count": 128,
+      "cover_image_url": "https://images.lu.ma/cursor-sf-jun-cover.jpg",
+      "source_url": "https://lu.ma/cursor-sf-jun",
+      "status": "scheduled",
+      "organizer_handles": ["alicechen", "brunot"],
+      "external_links": [],
+      "payload_hash": "fixed-hash-for-tests"
+    },
+    "observedAt": "2026-06-01T12:00:00.000Z"
+  },
+  {
+    "recordType": "person",
+    "sourcePlatform": "luma",
+    "sourceRecordId": "cursor-sf-jun:alicechen",
+    "payload": {
+      "canonical_name": "Alice Chen",
+      "names_seen": ["Alice Chen"],
+      "luma_handle": "alicechen",
+      "luma_profile_url": "https://lu.ma/u/alicechen",
+      "avatar_url": "https://images.lu.ma/avatars/alicechen.jpg",
+      "platform_identities": [
+        {
+          "platform": "luma",
+          "handle": "alicechen",
+          "profile_url": "https://lu.ma/u/alicechen"
+        },
+        {
+          "platform": "twitter",
+          "handle": "alicebuilds",
+          "profile_url": "https://x.com/alicebuilds"
+        },
+        {
+          "platform": "github",
+          "handle": "alice-codes",
+          "profile_url": "https://github.com/alice-codes"
+        }
+      ],
+      "observed_role": "organizer",
+      "luma_event_id": "cursor-sf-jun"
+    },
+    "observedAt": "2026-06-01T12:00:00.000Z"
+  },
+  {
+    "recordType": "person",
+    "sourcePlatform": "luma",
+    "sourceRecordId": "cursor-sf-jun:brunot",
+    "payload": {
+      "canonical_name": "Bruno Tavares",
+      "names_seen": ["Bruno Tavares"],
+      "luma_handle": "brunot",
+      "luma_profile_url": "https://lu.ma/u/brunot",
+      "avatar_url": null,
+      "platform_identities": [
+        {
+          "platform": "luma",
+          "handle": "brunot",
+          "profile_url": "https://lu.ma/u/brunot"
+        },
+        {
+          "platform": "linkedin",
+          "handle": "bruno-tavares-dev",
+          "profile_url": "https://www.linkedin.com/in/bruno-tavares-dev"
+        }
+      ],
+      "observed_role": "organizer",
+      "luma_event_id": "cursor-sf-jun"
+    },
+    "observedAt": "2026-06-01T12:00:00.000Z"
+  }
+]
