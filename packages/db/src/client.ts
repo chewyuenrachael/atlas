@@ -24,28 +24,35 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 let anonClient: SupabaseClient | null = null;
 let serviceClient: SupabaseClient | null = null;
 
-interface SupabaseEnv {
-  url: string;
-  anonKey: string;
-  serviceRoleKey: string;
+function readUrl(): Result<string, AtlasError> {
+  const url = process.env['SUPABASE_URL'];
+  if (!url)
+    return err(
+      new ConfigError('SUPABASE_URL not set', 'INVALID_CONFIG', { missing: ['SUPABASE_URL'] }),
+    );
+  return ok(url);
 }
 
-function readEnv(): Result<SupabaseEnv, AtlasError> {
-  const url = process.env['SUPABASE_URL'];
-  const anonKey = process.env['SUPABASE_ANON_KEY'];
-  const serviceRoleKey = process.env['SUPABASE_SERVICE_ROLE_KEY'];
-  const missing: string[] = [];
-  if (!url) missing.push('SUPABASE_URL');
-  if (!anonKey) missing.push('SUPABASE_ANON_KEY');
-  if (!serviceRoleKey) missing.push('SUPABASE_SERVICE_ROLE_KEY');
-  if (missing.length > 0 || !url || !anonKey || !serviceRoleKey) {
+function readAnonKey(): Result<string, AtlasError> {
+  const key = process.env['SUPABASE_ANON_KEY'];
+  if (!key)
     return err(
-      new ConfigError(`Supabase env vars missing: ${missing.join(', ')}`, 'INVALID_CONFIG', {
-        missing,
+      new ConfigError('SUPABASE_ANON_KEY not set', 'INVALID_CONFIG', {
+        missing: ['SUPABASE_ANON_KEY'],
       }),
     );
-  }
-  return ok({ url, anonKey, serviceRoleKey });
+  return ok(key);
+}
+
+function readServiceRoleKey(): Result<string, AtlasError> {
+  const key = process.env['SUPABASE_SERVICE_ROLE_KEY'];
+  if (!key)
+    return err(
+      new ConfigError('SUPABASE_SERVICE_ROLE_KEY not set', 'INVALID_CONFIG', {
+        missing: ['SUPABASE_SERVICE_ROLE_KEY'],
+      }),
+    );
+  return ok(key);
 }
 
 /**
@@ -54,9 +61,11 @@ function readEnv(): Result<SupabaseEnv, AtlasError> {
  */
 export function getAnonClient(): Result<SupabaseClient, AtlasError> {
   if (anonClient) return ok(anonClient);
-  const envResult = readEnv();
-  if (!envResult.ok) return envResult;
-  anonClient = createClient(envResult.value.url, envResult.value.anonKey, {
+  const url = readUrl();
+  if (!url.ok) return url;
+  const key = readAnonKey();
+  if (!key.ok) return key;
+  anonClient = createClient(url.value, key.value, {
     auth: { persistSession: false },
   });
   return ok(anonClient);
@@ -68,9 +77,11 @@ export function getAnonClient(): Result<SupabaseClient, AtlasError> {
  */
 export function getServiceClient(): Result<SupabaseClient, AtlasError> {
   if (serviceClient) return ok(serviceClient);
-  const envResult = readEnv();
-  if (!envResult.ok) return envResult;
-  serviceClient = createClient(envResult.value.url, envResult.value.serviceRoleKey, {
+  const url = readUrl();
+  if (!url.ok) return url;
+  const key = readServiceRoleKey();
+  if (!key.ok) return key;
+  serviceClient = createClient(url.value, key.value, {
     auth: { persistSession: false },
     db: { schema: 'public' },
   });
