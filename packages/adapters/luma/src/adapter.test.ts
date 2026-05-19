@@ -162,8 +162,6 @@ describe('LumaAdapter', () => {
     for await (const r of adapter.fetch()) first.push(r);
     const second: RawLumaEvent[] = [];
     for await (const r of adapter.fetch()) second.push(r);
-    expect(first.map((r) => r.payloadHash).sort()).toEqual(
-      second.map((r) => r.payloadHash).sort(),
-    );
+    expect(first.map((r) => r.payloadHash).sort()).toEqual(second.map((r) => r.payloadHash).sort());
   });
 });

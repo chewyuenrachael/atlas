@@ -154,10 +154,7 @@ export class LumaAdapter extends BaseSourceAdapter<RawLumaEvent> {
     _cursor: Cursor | undefined,
   ): Promise<{ items: RawLumaEvent[]; next?: Cursor }> {
     const listings = await this.fetchListings(this.scraperOptions);
-    this.adapterLog.info(
-      { listing_count: listings.length },
-      'discovered events on community page',
-    );
+    this.adapterLog.info({ listing_count: listings.length }, 'discovered events on community page');
 
     const items: RawLumaEvent[] = [];
     for (const listing of listings) {
@@ -194,11 +191,9 @@ export class LumaAdapter extends BaseSourceAdapter<RawLumaEvent> {
   protected override async normalizeRaw(rawId: UUID): Promise<NormalizedRecord[]> {
     const raw = await this.store.getById(rawId);
     if (!raw) {
-      throw new NormalizationError(
-        'raw luma event not found',
-        'NORMALIZATION_FAILED',
-        { raw_id: rawId },
-      );
+      throw new NormalizationError('raw luma event not found', 'NORMALIZATION_FAILED', {
+        raw_id: rawId,
+      });
     }
     const records = normalizeLumaEvent(raw);
     if (records.length > 0) {

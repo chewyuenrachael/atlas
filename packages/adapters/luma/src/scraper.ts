@@ -83,8 +83,7 @@ function resolveOptions(opts: ScraperOptions = {}): ResolvedScraperOptions {
   const communitySlug =
     opts.communitySlug ?? process.env['LUMA_COMMUNITY_SLUG'] ?? DEFAULT_COMMUNITY_SLUG;
   const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-  const useCache =
-    opts.useCache ?? (process.env['ATLAS_ENV'] ?? 'development') === 'development';
+  const useCache = opts.useCache ?? (process.env['ATLAS_ENV'] ?? 'development') === 'development';
   const cacheDir = opts.cacheDir ?? path.resolve(process.cwd(), '.cache', 'luma');
   const resolved: ResolvedScraperOptions = {
     baseUrl,
@@ -304,14 +303,12 @@ export function parseEventDetailHtml(html: string, url: string): ScrapedEventDet
   const ogDescription = matchMeta(html, 'og:description');
   const ogImage = matchMeta(html, 'og:image');
 
-  const title =
-    coerceText(ldEvent?.name) ?? coerceText(nextDataEvent?.title) ?? ogTitle ?? slug;
+  const title = coerceText(ldEvent?.name) ?? coerceText(nextDataEvent?.title) ?? ogTitle ?? slug;
 
   const description =
     coerceText(ldEvent?.description) ?? coerceText(nextDataEvent?.description) ?? ogDescription;
 
-  const startsAt =
-    toIsoOrNull(ldEvent?.startDate) ?? nextDataEvent?.startsAtIso ?? null;
+  const startsAt = toIsoOrNull(ldEvent?.startDate) ?? nextDataEvent?.startsAtIso ?? null;
   const endsAt = toIsoOrNull(ldEvent?.endDate) ?? nextDataEvent?.endsAtIso ?? null;
   const timezone = nextDataEvent?.timezone ?? null;
 
@@ -324,7 +321,9 @@ export function parseEventDetailHtml(html: string, url: string): ScrapedEventDet
     extractOrganizersFromJsonLd(jsonLd),
     nextDataEvent?.organizers ?? [],
   );
-  const eventLinks = extractExternalLinks(html, { excludeUrls: organizers.flatMap((o) => collectOrganizerUrls(o)) });
+  const eventLinks = extractExternalLinks(html, {
+    excludeUrls: organizers.flatMap((o) => collectOrganizerUrls(o)),
+  });
 
   return {
     slug,
@@ -443,10 +442,7 @@ function isPlausibleEventSlug(slug: string): boolean {
 function extractTitleForSlug(html: string, slug: string): string | null {
   // Look for an anchor that points to this slug and lift any nearby text node.
   const escaped = slug.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-  const re = new RegExp(
-    `<a[^>]+href\\s*=\\s*"[^"]*/${escaped}"[^>]*>([\\s\\S]*?)</a>`,
-    'i',
-  );
+  const re = new RegExp(`<a[^>]+href\\s*=\\s*"[^"]*/${escaped}"[^>]*>([\\s\\S]*?)</a>`, 'i');
   const m = re.exec(html);
   if (!m || !m[1]) return null;
   const stripped = stripTags(m[1]).trim();
@@ -531,7 +527,9 @@ function extractOrganizersFromJsonLd(events: JsonLdEvent[]): ScrapedOrganizer[] 
   return out;
 }
 
-function toJsonLdPersons(value: unknown): Array<{ name?: unknown; url?: unknown; image?: unknown }> {
+function toJsonLdPersons(
+  value: unknown,
+): Array<{ name?: unknown; url?: unknown; image?: unknown }> {
   if (!value) return [];
   if (Array.isArray(value)) {
     return value.flatMap((v) => toJsonLdPersons(v));
@@ -568,8 +566,7 @@ interface NextDataEvent {
 }
 
 function readNextDataPayload(html: string): unknown {
-  const re =
-    /<script[^>]+id\s*=\s*"__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/i;
+  const re = /<script[^>]+id\s*=\s*"__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/i;
   const m = re.exec(html);
   if (!m || !m[1]) return null;
   try {
@@ -633,7 +630,9 @@ function nodeToEvent(node: Record<string, unknown>): NextDataEvent | null {
   if (desc) ev.description = desc;
   const startIso = toIsoOrNull(start);
   if (startIso) ev.startsAtIso = startIso;
-  const endIso = toIsoOrNull(pickString(node, ['end_at', 'endAt', 'ends_at', 'endsAt', 'end_date']));
+  const endIso = toIsoOrNull(
+    pickString(node, ['end_at', 'endAt', 'ends_at', 'endsAt', 'end_date']),
+  );
   if (endIso) ev.endsAtIso = endIso;
   const timezone = pickString(node, ['timezone', 'tz']);
   if (timezone) ev.timezone = timezone;
@@ -648,7 +647,12 @@ function nodeToEvent(node: Record<string, unknown>): NextDataEvent | null {
   if (venueAddress) ev.venueAddress = venueAddress;
   const venueCity = pickString(node, ['venue_city', 'venueCity', 'city', 'geo_city']);
   if (venueCity) ev.venueCity = venueCity;
-  const venueCountry = pickString(node, ['venue_country', 'venueCountry', 'country', 'geo_country']);
+  const venueCountry = pickString(node, [
+    'venue_country',
+    'venueCountry',
+    'country',
+    'geo_country',
+  ]);
   if (venueCountry) ev.venueCountry = venueCountry;
   const coverImageUrl = pickString(node, ['cover_url', 'coverUrl', 'cover_image_url']);
   if (coverImageUrl) ev.coverImageUrl = coverImageUrl;
@@ -796,8 +800,7 @@ function extractLocation(
   venueCountry: string | null;
 } {
   const ldLocation = toLocationNode(ldEvent?.location);
-  const venueName =
-    coerceText(ldLocation?.name) ?? nextDataEvent?.venueName ?? null;
+  const venueName = coerceText(ldLocation?.name) ?? nextDataEvent?.venueName ?? null;
   const venueAddressNode = ldLocation?.address;
   let venueAddress: string | null = null;
   let venueCity: string | null = null;
@@ -982,7 +985,7 @@ function collectOrganizerUrls(o: ScrapedOrganizer): string[] {
 function coerceText(value: unknown): string | null {
   if (typeof value === 'string' && value.trim().length > 0) return value;
   if (value && typeof value === 'object') {
-    const candidate = (value as { '@value'?: unknown; name?: unknown; text?: unknown });
+    const candidate = value as { '@value'?: unknown; name?: unknown; text?: unknown };
     return (
       coerceText(candidate['@value']) ??
       coerceText(candidate.name) ??

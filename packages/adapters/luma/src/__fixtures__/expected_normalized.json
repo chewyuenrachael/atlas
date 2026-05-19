@@ -19,10 +19,7 @@
       "cover_image_url": "https://images.lu.ma/cursor-sf-jun-cover.jpg",
       "source_url": "https://lu.ma/cursor-sf-jun",
       "status": "scheduled",
-      "organizer_handles": [
-        "alicechen",
-        "brunot"
-      ],
+      "organizer_handles": ["alicechen", "brunot"],
       "external_links": [],
       "payload_hash": "fixed-hash-for-tests"
     },
@@ -34,9 +31,7 @@
     "sourceRecordId": "cursor-sf-jun:alicechen",
     "payload": {
       "canonical_name": "Alice Chen",
-      "names_seen": [
-        "Alice Chen"
-      ],
+      "names_seen": ["Alice Chen"],
       "luma_handle": "alicechen",
       "luma_profile_url": "https://lu.ma/u/alicechen",
       "avatar_url": "https://images.lu.ma/avatars/alicechen.jpg",
@@ -68,9 +63,7 @@
     "sourceRecordId": "cursor-sf-jun:brunot",
     "payload": {
       "canonical_name": "Bruno Tavares",
-      "names_seen": [
-        "Bruno Tavares"
-      ],
+      "names_seen": ["Bruno Tavares"],
       "luma_handle": "brunot",
       "luma_profile_url": "https://lu.ma/u/brunot",
       "avatar_url": null,

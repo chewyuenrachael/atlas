@@ -5,7 +5,12 @@
  */
 export const ADAPTER_NAME = 'luma';
 
-export { LumaAdapter, InMemoryRawLumaStore, type LumaAdapterOptions, type RawLumaStore } from './adapter.js';
+export {
+  LumaAdapter,
+  InMemoryRawLumaStore,
+  type LumaAdapterOptions,
+  type RawLumaStore,
+} from './adapter.js';
 export { normalizeLumaEvent } from './normalizer.js';
 export {
   scrapeCommunityPage,

@@ -63,34 +63,35 @@ export const fetchLumaEvents = inngest.createFunction(
     // Step 1: discover + persist all raw events. Wrapped in one step because
     // the raw inserts are idempotent on `luma_event_id` (SPEC.md §3.5 +
     // §5.4) — re-running this step on retry produces no new rows.
-    const persisted = await step.run('discover-and-store-raw', async (): Promise<
-      Array<{ rawId: string; lumaEventId: string; existed: boolean }>
-    > => {
-      const stored: Array<{ rawId: string; lumaEventId: string; existed: boolean }> = [];
-      let discovered = 0;
-      let failed = 0;
-      for await (const raw of adapter.fetch()) {
-        discovered += 1;
-        try {
-          const { rawId } = await adapter.storeRaw(raw);
-          // We don't have a per-record `existed` signal at this layer; the
-          // adapter's idempotency guarantee covers it. Default to false so
-          // downstream counts are conservative.
-          stored.push({ rawId, lumaEventId: raw.lumaEventId, existed: false });
-        } catch (cause) {
-          failed += 1;
-          log.warn(
-            { err: cause, luma_event_id: raw.lumaEventId },
-            'failed to store raw luma event; continuing',
-          );
+    const persisted = await step.run(
+      'discover-and-store-raw',
+      async (): Promise<Array<{ rawId: string; lumaEventId: string; existed: boolean }>> => {
+        const stored: Array<{ rawId: string; lumaEventId: string; existed: boolean }> = [];
+        let discovered = 0;
+        let failed = 0;
+        for await (const raw of adapter.fetch()) {
+          discovered += 1;
+          try {
+            const { rawId } = await adapter.storeRaw(raw);
+            // We don't have a per-record `existed` signal at this layer; the
+            // adapter's idempotency guarantee covers it. Default to false so
+            // downstream counts are conservative.
+            stored.push({ rawId, lumaEventId: raw.lumaEventId, existed: false });
+          } catch (cause) {
+            failed += 1;
+            log.warn(
+              { err: cause, luma_event_id: raw.lumaEventId },
+              'failed to store raw luma event; continuing',
+            );
+          }
         }
-      }
-      log.info(
-        { events_discovered: discovered, raw_stored: stored.length, failures: failed },
-        'discover-and-store-raw complete',
-      );
-      return stored;
-    });
+        log.info(
+          { events_discovered: discovered, raw_stored: stored.length, failures: failed },
+          'discover-and-store-raw complete',
+        );
+        return stored;
+      },
+    );
 
     // Step 2: normalize every stored raw record. One step.run per record so
     // a single normalization failure doesn't block the rest of the batch.
