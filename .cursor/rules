@@ -1,0 +1,286 @@
+# Cursor Community Atlas — Agent Rules
+
+Every future agent working in this repository inherits these rules. Treat them as binding. Where these rules conflict with a one-off task description, follow the rules and ask for clarification. SPEC.md is the canonical specification — see AGENTS.md for the operating manual.
+
+---
+
+## 1. TypeScript Conventions
+
+**Strict mode is mandatory.** `tsconfig.base.json` enables `strict`, `noUncheckedIndexedAccess`, `noImplicitOverride`, `noImplicitReturns`, and `noFallthroughCasesInSwitch`. Do not weaken these in package-level `tsconfig.json` files.
+
+**No `any`.** The lint rule `@typescript-eslint/no-explicit-any` is set to `error`. If you genuinely need an escape hatch, use `unknown` and narrow.
+
+```ts
+// good
+function parse(input: unknown): Result<Person, AtlasError> {
+  if (typeof input !== 'object' || input === null) return err(new NormalizationError(...));
+  // ...
+}
+
+// bad
+function parse(input: any): Person { ... }
+```
+
+**Prefer `Result<T, E>` over throws.** Every async function that crosses a module boundary returns `Promise<Result<T, AtlasError>>`. Throwing is reserved for genuinely-unexpected internal invariants. See `packages/core/src/result.ts`.
+
+```ts
+// good
+export async function findPerson(id: UUID): Promise<Result<Person, QueryError>> {
+  const row = await supabase.from('person').select().eq('id', id).single();
+  if (row.error) return err(new QueryError(row.error.message, 'QUERY_FAILED'));
+  return ok(row.data);
+}
+
+// bad — throws across module boundary
+export async function findPerson(id: UUID): Promise<Person> {
+  const row = await supabase.from('person').select().eq('id', id).single();
+  if (row.error) throw new Error(row.error.message);
+  return row.data;
+}
+```
+
+**Exhaustive switch checks.** Use a `never`-typed default to force compile-time exhaustion over closed unions.
+
+```ts
+function widthOf(stage: LifecycleStage): number {
+  switch (stage) {
+    case 'lurker': return 1;
+    case 'engaged': return 2;
+    // ... all variants ...
+    default: {
+      const _exhaustive: never = stage;
+      return _exhaustive;
+    }
+  }
+}
+```
+
+**`type` over `interface` for unions and primitives; `interface` for entity shapes.** Entity types in `packages/core/src/types.ts` use `interface` for extensibility. Unions, branded types, and helpers use `type`.
+
+---
+
+## 2. File Organization
+
+**One export per file when the export is meaningful.** A file that defines `LumaAdapter` does only that. Helpers used by `LumaAdapter` live in sibling files, not stuffed into the class.
+
+**Named exports preferred over default.** Default exports break refactoring tools and obscure the symbol's name. The only exception is Next.js page/layout components, which Next requires as default exports.
+
+```ts
+// good
+export function computeMatchConfidence(signals: ResolutionSignal[]): number { ... }
+
+// avoid
+export default function computeMatchConfidence(...) { ... }
+```
+
+**Barrel exports (`index.ts`) re-export the public surface of a package.** Internal files do not export through the barrel. Consumers always import from the package name, never deep paths, unless the package explicitly exposes a subpath in `exports`.
+
+---
+
+## 3. Naming
+
+| Kind | Style | Example |
+|---|---|---|
+| Types, interfaces, classes, React components | `PascalCase` | `Person`, `BaseSourceAdapter`, `PersonCard` |
+| Functions, variables, methods | `camelCase` | `findPersonById`, `signalWeights` |
+| Constants (top-level, frozen, immutable) | `SCREAMING_SNAKE_CASE` | `RESOLUTION_AUTO_MERGE_THRESHOLD` |
+| File names | `kebab-case` | `rate-limiter.ts`, `person-card.tsx` |
+| Database tables and columns | `snake_case` | `person_event`, `canonical_name` |
+| Inngest function IDs | `kebab-case` matching file name | `luma-fetch-events` in `luma-fetch-events.ts` |
+
+---
+
+## 4. Database Access
+
+**All SQL access flows through `packages/db/queries/*`.** Adapters, workflows, intelligence services, and API routes call named query helpers. They do **not** import `@supabase/supabase-js` directly. They do **not** write inline `.from('table').select()` calls.
+
+```ts
+// good
+import { PersonQueries } from '@atlas/db';
+const result = await PersonQueries.findPersonById(personId);
+
+// bad
+const { data } = await supabase.from('person').select().eq('id', personId);
+```
+
+If a query you need does not exist as a helper, add it to `packages/db/queries/<entity>.ts` (see AGENTS.md "How to add a new query helper") before using it.
+
+**No raw SQL outside `packages/db` and `infra/migrations`.** Even one-off scripts go through helpers. The exception is migrations themselves, which are SQL by definition.
+
+---
+
+## 5. Async Patterns
+
+**Async functions return `Promise<Result<T, AtlasError>>`.** Never throw across a module boundary. The one exception: AsyncIterables produced by adapters (the iterator protocol does not have a Result envelope). Callers wrap with `tryAsync` at the consumption site.
+
+**Avoid `Promise.all` over heterogeneous results.** If two parallel operations can fail independently, await them, branch on each Result, and return an aggregate error if either failed. `Promise.all` rejecting on the first failure loses information.
+
+**No floating promises.** Either `await` or explicitly fire-and-forget via `void promise`.
+
+---
+
+## 6. Error Handling
+
+**Every catch block logs with context and produces an `AtlasError`.** Silent swallowing is forbidden.
+
+```ts
+// good
+try {
+  return await luma.fetch();
+} catch (cause) {
+  const e = new IngestionError('luma fetch failed', 'INGESTION_FAILED', { url }, cause);
+  this.log.error({ err: e }, 'luma fetch failed');
+  return err(e);
+}
+
+// bad — silent swallow
+try { return await luma.fetch(); } catch { return null; }
+```
+
+**Use the specific subclass** (`IngestionError`, `NormalizationError`, `ResolutionError`, `QueryError`, `WorkflowError`, `ExternalApiError`, `ConfigError`) rather than `AtlasError` directly. The subclass aids triage in logs and dashboards.
+
+**Logged errors carry `err` as a field** (matches Pino's serializer in `packages/core/src/logger.ts`).
+
+---
+
+## 7. Testing
+
+**Tests live next to source files as `*.test.ts`.** No separate `__tests__/` directory. Co-location makes refactoring trivial.
+
+**Vitest is the only test runner.** Do not introduce Jest, Mocha, or any other runner. Vitest config is at the repo root (`vitest.config.ts`).
+
+**Unit tests for pure logic. Integration tests for adapter normalization.** Adapter normalization tests load fixtures from a sibling `__fixtures__/` folder and assert against the normalized output. End-to-end tests are deliberately out of scope through Phase 4.
+
+```ts
+// packages/adapters/luma/src/normalize.test.ts
+import { describe, expect, it } from 'vitest';
+import { normalizeLumaEvent } from './normalize.js';
+import fixture from './__fixtures__/luma-event-1.json';
+
+describe('normalizeLumaEvent', () => {
+  it('produces an Event record', () => {
+    const result = normalizeLumaEvent(fixture);
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.value[0]?.recordType).toBe('event');
+  });
+});
+```
+
+---
+
+## 8. Migrations
+
+**Migrations live in `infra/migrations/` as timestamp-prefixed SQL files.** Filename pattern: `NNNN_kebab_case_description.sql` where `NNNN` is a zero-padded integer monotonically increasing from `0000`.
+
+**Migrations are idempotent where possible.** Use `CREATE TABLE IF NOT EXISTS`, `CREATE INDEX IF NOT EXISTS`, `ALTER TABLE … ADD COLUMN IF NOT EXISTS` (Postgres 16 supports these). No bare `DROP` statements without an accompanying down-migration plan.
+
+**Migrations run in a single transaction.** If you need DDL that cannot run inside a transaction (concurrent index creation), put it in its own migration file with a comment.
+
+**Use TEXT + CHECK constraints, never Postgres enum types.** Easier to evolve (SPEC.md §3.4 #3).
+
+---
+
+## 9. Inngest Functions
+
+**One function per file.** The file name matches the function ID. `luma-fetch-events.ts` exports `fetchLumaEvents` with `id: 'luma-fetch-events'`.
+
+**Each step is its own `step.run('step-name', async () => …)` block.** Inngest's durable-execution guarantees depend on idempotent step bodies. Do not perform multiple effects inside one step.
+
+**Workflow files live in `packages/workflows/<workflow-name>.ts`.** Shared helpers live in `packages/workflows/_shared/`.
+
+---
+
+## 10. Adapter Pattern
+
+**Every adapter extends `BaseSourceAdapter<TRawRecord>`** from `@atlas/adapters-shared` and implements the abstract methods (`fetchPage`, `persistRaw`, `normalizeRaw`, `idempotencyKey`). The `SourceAdapter<T>` interface from `@atlas/core` is the public contract.
+
+**Adapter folder layout:**
+```
+packages/adapters/<name>/
+├── src/
+│   ├── adapter.ts         # the class
+│   ├── fetch.ts           # source-specific fetch helpers
+│   ├── normalize.ts       # raw -> NormalizedRecord[]
+│   ├── types.ts           # raw shape definitions
+│   ├── __fixtures__/      # JSON fixtures for tests
+│   └── index.ts           # exports adapter instance
+├── package.json
+└── tsconfig.json
+```
+
+**Rate limit values come from `@atlas/core/constants`.** Never hard-code numbers in an adapter.
+
+---
+
+## 11. Comments and JSDoc
+
+**JSDoc on every public function and class.** Include at least:
+- One-line summary
+- Parameters and return value
+- One `@example` block showing realistic usage
+
+```ts
+/**
+ * Compute the weighted match confidence for a set of resolution signals.
+ *
+ * @param signals - List of signals, weights sourced from `RESOLUTION_SIGNAL_WEIGHTS`.
+ * @returns Confidence in [0, 1].
+ *
+ * @example
+ * ```ts
+ * const conf = computeMatchConfidence([{ signalType: 'email_exact', weight: 0.95, confidence: 1 }]);
+ * if (conf >= RESOLUTION_AUTO_MERGE_THRESHOLD) await mergePerson(...);
+ * ```
+ */
+export function computeMatchConfidence(signals: ResolutionSignal[]): number { … }
+```
+
+**Inline comments only for non-obvious logic.** Do not narrate what the code does. Explain *why* a non-obvious choice was made or what invariant a block preserves.
+
+```ts
+// good — explains a non-obvious choice
+// Use natural ordering on `last_observed_at DESC` so dormant accounts
+// sort below recently-active ones without an explicit WHERE clause.
+.order('last_observed_at', { ascending: false })
+
+// bad — narrates obvious code
+// Order by last observed at descending
+.order('last_observed_at', { ascending: false })
+```
+
+**Mark spec-ambiguous decisions with `TODO(spec):`** and proceed with the simplest defensible default.
+
+---
+
+## 12. Git Commits
+
+**Conventional commits format.** `<type>(<scope>): <subject>` where type is one of `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `perf`, `build`, `ci`, or `style`.
+
+```
+feat(adapters/luma): implement attendee fetch and normalization
+fix(intelligence/identity-resolution): correct corroboration boost bound
+docs(spec): clarify embedding-match confidence formula
+refactor(db/queries/person): collapse upsert + touch into a single helper
+```
+
+**One logical change per commit.** Do not bundle a bug fix with a new feature.
+
+**Reference SPEC sections in commit bodies** when the change implements a specific spec section.
+
+---
+
+## 13. Dependencies
+
+**No new dependencies without justification.** SPEC.md §2.3 locks the core stack. Adding `lodash`, `axios`, or any general-purpose utility requires a clear "why not the standard library / existing dependency" answer in the PR description.
+
+**No version ranges with `^0.x`** in production dependencies. Pin to `^1` or higher. Pre-1.0 packages need an explicit decision in the PR.
+
+---
+
+## 14. PRs
+
+**PR title in conventional commit format.** Match the commit style.
+
+**PR description includes a `Spec ref:` line** pointing to the SPEC.md section(s) the work implements. If the work doesn't implement a spec section, justify in the description.
+
+**Definition of done** lives in AGENTS.md. Re-read it before opening a PR.

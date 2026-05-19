@@ -1,0 +1,23 @@
+{
+  "name": "@atlas/api-graphql",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "GraphQL endpoint mirroring the entity model.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@atlas/core": "workspace:*",
+    "@atlas/db": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
