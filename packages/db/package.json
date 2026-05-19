@@ -17,9 +17,11 @@
   },
   "dependencies": {
     "@atlas/core": "workspace:*",
-    "@supabase/supabase-js": "^2.45.6"
+    "@supabase/supabase-js": "^2.45.6",
+    "pg": "^8.21.0"
   },
   "devDependencies": {
+    "@types/pg": "^8.20.0",
     "typescript": "^5.6.3"
   }
 }

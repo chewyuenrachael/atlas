@@ -11,3 +11,4 @@ export * as CommunicationQueries from './communication.js';
 export * as ArtifactQueries from './artifact.js';
 export * as ProgramQueries from './program.js';
 export * as SignalQueries from './signal.js';
+export * as AuditQueries from './audit.js';
