@@ -40,11 +40,9 @@ function readEnv(): Result<SupabaseEnv, AtlasError> {
   if (!serviceRoleKey) missing.push('SUPABASE_SERVICE_ROLE_KEY');
   if (missing.length > 0 || !url || !anonKey || !serviceRoleKey) {
     return err(
-      new ConfigError(
-        `Supabase env vars missing: ${missing.join(', ')}`,
-        'INVALID_CONFIG',
-        { missing },
-      ),
+      new ConfigError(`Supabase env vars missing: ${missing.join(', ')}`, 'INVALID_CONFIG', {
+        missing,
+      }),
     );
   }
   return ok({ url, anonKey, serviceRoleKey });

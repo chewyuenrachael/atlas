@@ -21,7 +21,9 @@ export async function findProgramById(_id: UUID): Promise<Result<Program | null,
   return err(NOT_IMPLEMENTED('findProgramById'));
 }
 
-export async function findProgramByName(_name: string): Promise<Result<Program | null, AtlasError>> {
+export async function findProgramByName(
+  _name: string,
+): Promise<Result<Program | null, AtlasError>> {
   return err(NOT_IMPLEMENTED('findProgramByName'));
 }
 

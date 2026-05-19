@@ -20,9 +20,7 @@ const NOT_IMPLEMENTED = (name: string): AtlasError =>
     helper: name,
   });
 
-export async function insertSignal(
-  _input: Omit<Signal, 'id'>,
-): Promise<Result<UUID, AtlasError>> {
+export async function insertSignal(_input: Omit<Signal, 'id'>): Promise<Result<UUID, AtlasError>> {
   return err(NOT_IMPLEMENTED('insertSignal'));
 }
 

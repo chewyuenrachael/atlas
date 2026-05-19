@@ -105,10 +105,10 @@ export abstract class BaseSourceAdapter<TRawRecord> implements SourceAdapter<TRa
     while (safety < 10_000) {
       safety += 1;
       await limiter.acquire();
-      const page = await withRetry(
-        () => this.fetchPage(nextCursor),
-        { fallbackCode: 'INGESTION_FAILED', ...this.retryOptions },
-      );
+      const page = await withRetry(() => this.fetchPage(nextCursor), {
+        fallbackCode: 'INGESTION_FAILED',
+        ...this.retryOptions,
+      });
       for (const item of page.items) yield item;
       if (!page.next || page.items.length === 0) return;
       nextCursor = page.next;
@@ -128,10 +128,10 @@ export abstract class BaseSourceAdapter<TRawRecord> implements SourceAdapter<TRa
     const key = this.idempotencyKey(record);
     this.log.debug({ idempotency_key: key }, 'storing raw record');
     try {
-      return await withRetry(
-        () => this.persistRaw(record),
-        { fallbackCode: 'INGESTION_FAILED', ...this.retryOptions },
-      );
+      return await withRetry(() => this.persistRaw(record), {
+        fallbackCode: 'INGESTION_FAILED',
+        ...this.retryOptions,
+      });
     } catch (cause) {
       const e = isAtlasError(cause)
         ? cause
@@ -153,10 +153,10 @@ export abstract class BaseSourceAdapter<TRawRecord> implements SourceAdapter<TRa
   async normalize(rawId: UUID): Promise<NormalizedRecord[]> {
     this.log.debug({ raw_id: rawId }, 'normalizing raw record');
     try {
-      return await withRetry(
-        () => this.normalizeRaw(rawId),
-        { fallbackCode: 'NORMALIZATION_FAILED', ...this.retryOptions },
-      );
+      return await withRetry(() => this.normalizeRaw(rawId), {
+        fallbackCode: 'NORMALIZATION_FAILED',
+        ...this.retryOptions,
+      });
     } catch (cause) {
       const e = isAtlasError(cause)
         ? cause

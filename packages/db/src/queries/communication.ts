@@ -14,11 +14,9 @@ import {
 } from '@atlas/core';
 
 const NOT_IMPLEMENTED = (name: string): AtlasError =>
-  new QueryError(
-    `packages/db/queries/communication.${name} is a Phase 0 stub`,
-    'NOT_IMPLEMENTED',
-    { helper: name },
-  );
+  new QueryError(`packages/db/queries/communication.${name} is a Phase 0 stub`, 'NOT_IMPLEMENTED', {
+    helper: name,
+  });
 
 export async function findCommunicationBySourceId(
   _platform: string,

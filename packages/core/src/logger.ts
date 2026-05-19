@@ -63,6 +63,9 @@ export const logger: Logger = pino(baseOptions);
  * Build a child logger with a correlation id pre-populated. Convenience for
  * adapter / workflow entry points.
  */
-export function withCorrelation(correlationId: string, fields: Record<string, unknown> = {}): Logger {
+export function withCorrelation(
+  correlationId: string,
+  fields: Record<string, unknown> = {},
+): Logger {
   return logger.child({ correlation_id: correlationId, ...fields });
 }
