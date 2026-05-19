@@ -932,8 +932,17 @@ function deriveLumaHandle(name: string, profileUrl: string | null): string {
     try {
       const url = new URL(profileUrl);
       const segments = url.pathname.split('/').filter((s) => s.length > 0);
-      // Luma profile URLs follow `/u/<handle>` or `/<handle>`.
-      const handle = segments[0] === 'u' && segments[1] ? segments[1] : segments[0];
+      // Luma profile URLs come in three shapes:
+      //   `/<handle>`            (calendar pages, e.g. lu.ma/cursorcommunity)
+      //   `/u/<handle>`          (legacy short profile URLs)
+      //   `/user/<opaque_id>`    (current canonical profile URLs)
+      // For the first two the handle is human-readable; for the third the
+      // path prefix is literally `user` and the meaningful identifier is the
+      // opaque id underneath. Using `segments[0]` for `/user/...` would
+      // collapse every distinct Luma profile to the same handle.
+      const firstSeg = segments[0];
+      const isProfilePrefix = firstSeg === 'u' || firstSeg === 'user';
+      const handle = isProfilePrefix && segments[1] ? segments[1] : firstSeg;
       if (handle) return handle.toLowerCase();
     } catch {
       // ignore

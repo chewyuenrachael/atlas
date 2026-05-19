@@ -132,10 +132,12 @@ Tests cover:
 
 ## Inngest function
 
-`packages/workflows/_shared/src/luma-fetch.ts` exposes
-`fetchLumaEvents` (ID `luma-fetch-events`) on a `0 */4 * * *` cron per
-SPEC.md §5.2.1. Each side effect lives in its own `step.run('...')` so
-Inngest's durable-execution guarantees apply.
+`packages/workflows/_shared/src/luma-ingest-pipeline.ts` exposes
+`lumaIngestPipeline` (ID `luma-ingest-pipeline`) on a `0 */4 * * *` cron
+per SPEC.md §5.2.1. The same module also exports `runLumaIngest`, the
+pure-function entry point used by `scripts/backfill-luma.ts`. Each side
+effect lives in its own `step.run('...')` so Inngest's durable-execution
+guarantees apply.
 
 ## Known limitations
 

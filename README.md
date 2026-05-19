@@ -6,7 +6,35 @@ Keystone data layer that converts ambient community signal across public and int
 - **Operating manual for agents:** [`AGENTS.md`](./AGENTS.md) — required reading before touching this repo.
 - **Mechanical conventions:** [`.cursor/rules`](./.cursor/rules).
 
-This is a Phase 0 scaffold. The monorepo is wired up, type contracts are locked, and every adapter / intelligence service / workflow / API package is a typed empty shell ready for Phase 1 onward.
+Phase 1 (Foundation) is complete: the schema is live in Supabase, the Luma adapter ingests events into the canonical graph, and the Tier 1 + Tier 2 identity resolver assigns each Person a canonical id with an audit row.
+
+---
+
+## Current state
+
+Phase 1 (SPEC.md §11 Phase 1) is complete. The repository ships:
+
+- The full SPEC.md §3 schema applied to Supabase (entities, edges, raw tables, audit tables, event log, materialized views).
+- The Luma source adapter (SPEC.md §5.2.1) — discovers events on
+  `lu.ma/cursorcommunity`, captures raw payloads idempotently into
+  `raw_luma_event`, and normalizes into Event + organizer Person records.
+- The Tier 1 (explicit linking) + Tier 2 (heuristic) identity resolver
+  (SPEC.md §4) — every Person record produces exactly one
+  `resolution_decision` audit row.
+- Supabase-backed implementations of the `RawLumaStore`, `PersonStore`, and
+  `ResolutionAuditStore` interfaces wired into an end-to-end Inngest workflow
+  (`packages/workflows/_shared/src/luma-ingest-pipeline.ts`).
+- A backfill CLI (`pnpm backfill:luma`) and a Phase 1 exit-criteria verifier
+  (`pnpm verify:phase-1`).
+- A minimal cockpit page at `/` that reads totals and the most recent events
+  + top ambassadors directly from Supabase.
+
+Run `pnpm verify:phase-1` to see the current Phase 1 exit-criteria report.
+
+Phase 2 is next: add the remaining six sources (Twitter, GitHub, Reddit,
+Hacker News, Cursor Forum, YouTube, LinkedIn), expand Tier 2 heuristics with
+cross-platform handles, and turn on Tier 3 embedding-based resolution
+(SPEC.md §11 Phase 2).
 
 ---
 
@@ -30,7 +58,17 @@ pnpm dev
 # open http://localhost:3000
 ```
 
-You should see `Cursor Community Atlas — Phase 0 scaffold complete` on the home page.
+You should see the Phase 1 demo cockpit with live totals, the 10 most recent events, and the top 10 ambassadors.
+
+To ingest data and verify exit criteria:
+
+```bash
+# 5. Backfill from Luma
+pnpm backfill:luma
+
+# 6. Verify Phase 1 exit criteria
+pnpm verify:phase-1
+```
 
 ---
 
@@ -87,6 +125,8 @@ Stack rationale: SPEC.md §2.3.
 | `pnpm lint:fix` | ESLint with `--fix` |
 | `pnpm format` | Prettier write |
 | `pnpm format:check` | Prettier check |
+| `pnpm backfill:luma` | One-shot Luma backfill: fetches all `lu.ma/cursorcommunity` events, normalizes, resolves identities, and reports counts |
+| `pnpm verify:phase-1` | Reports pass/fail against the SPEC.md §11 Phase 1 exit criteria |
 
 ---
 
@@ -94,26 +134,33 @@ Stack rationale: SPEC.md §2.3.
 
 | Phase | Status | Goal |
 |---|---|---|
-| 0 — Pre-build | ✅ Done (this scaffold) | Monorepo, type contracts, conventions, CI |
-| 1 — Foundation | ⏳ Next | Schema migrations + Luma adapter (SPEC §11 Phase 1) |
-| 2 — Multi-source | ⏳ | Twitter, GitHub, HN, Reddit + Tier 2/3 identity resolution (SPEC §11 Phase 2) |
+| 0 — Pre-build | ✅ Done | Monorepo, type contracts, conventions, CI |
+| 1 — Foundation | ✅ Done | Schema migrations + Luma adapter + Tier 1/2 identity resolver (SPEC §11 Phase 1) |
+| 2 — Multi-source | ⏳ Next | Twitter, GitHub, HN, Reddit + Tier 2/3 identity resolution (SPEC §11 Phase 2) |
 | 3 — Query layer | ⏳ | REST + GraphQL + Ask Anything + cockpit views (SPEC §11 Phase 3) |
 | 4 — Scoring | ⏳ | Scoring engines + first workflow (Organizer Activation) (SPEC §11 Phase 4) |
 | 5 — Polish | ⏳ | Demo, Loom, send (SPEC §11 Phase 5) |
 
 ---
 
-## Next steps (Phase 1)
+## Next steps (Phase 2)
 
-The next person to pick this up should:
+Phase 2 (SPEC.md §11 Phase 2) adds the remaining sources and the cross-source
+identity layer. The next person to pick this up should:
 
-1. **Stand up Supabase.** Create a project, enable `pgvector`, capture URL + keys into `.env`.
-2. **Land the first real migration.** Replace `infra/migrations/0000_init.sql` with the full schema from SPEC.md §3 (entities, edges, raw tables, audit, event log). Apply via Supabase SQL editor or `supabase db push`.
-3. **Implement the Luma adapter** in `packages/adapters/luma/`. Follow the recipe in `AGENTS.md` §4 and the source spec in SPEC.md §5.2.1.
-4. **Implement the Tier 1 + Tier 2 identity resolver** in `packages/intelligence/identity-resolution/`. SPEC.md §4.2.
-5. **Fill in the named query helpers** in `packages/db/src/queries/*` — they are typed stubs today; replace with real Supabase calls behind the same `Result<T, AtlasError>` contract.
-
-Exit criteria for Phase 1 (from SPEC.md §11): a SQL query like `SELECT COUNT(*) FROM person WHERE location_country = 'Brazil';` returns a sensible number; `resolution_decision` has entries; no raw records stuck in `pending`.
+1. **Implement the next adapter.** Follow the recipe in `AGENTS.md` §4 — Twitter,
+   GitHub, Hacker News, and Reddit are the highest-signal sources per SPEC.md §5.2.
+   Each adapter writes to its own `raw_<source>` table.
+2. **Extend identity resolution.** Tier 2 today is heuristic over name + email;
+   Phase 2 adds cross-platform handle matching (e.g. GitHub `@alice` ↔ Twitter
+   `@alice` ↔ Luma `Alice C.`) and turns on Tier 3 embedding-based resolution
+   (`pgvector`) behind a feature flag (SPEC.md §4.3 — §4.5).
+3. **Wire each new adapter into the ingest pipeline.** The pattern in
+   `luma-ingest-pipeline.ts` is intentionally generic — extract the shared phases
+   so the GitHub / Twitter pipelines reuse normalization → resolve → upsert.
+4. **Expand the cockpit.** Phase 3 lands the full query layer (REST + GraphQL +
+   Ask Anything), but until then the demo page should grow filters for
+   source-of-truth, persona, and lifecycle stage.
 
 ---
 

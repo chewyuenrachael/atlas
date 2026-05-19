@@ -9,7 +9,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./client": "./src/client.ts",
-    "./queries": "./src/queries/index.ts"
+    "./queries": "./src/queries/index.ts",
+    "./pg-client": "./src/pg-client.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

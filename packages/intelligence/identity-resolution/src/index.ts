@@ -66,6 +66,12 @@ export {
   type HumanReviewQueueItem,
 } from './store.js';
 
+export {
+  SupabasePersonStore,
+  SupabaseResolutionAuditStore,
+  findEventIdByLumaId,
+} from './store-supabase.js';
+
 export type {
   NormalizedPersonPayload,
   NormalizedPersonRecord,
