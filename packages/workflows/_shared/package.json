@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "@atlas/core": "workspace:*",
-    "@atlas/db": "workspace:*"
+    "@atlas/db": "workspace:*",
+    "@atlas/adapter-luma": "workspace:*",
+    "inngest": "^3.27.0"
   },
   "devDependencies": {
     "typescript": "^5.6.3"
