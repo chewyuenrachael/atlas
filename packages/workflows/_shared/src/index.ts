@@ -11,3 +11,9 @@ export {
   type LumaIngestDeps,
   type LumaIngestStats,
 } from './luma-ingest-pipeline.js';
+export {
+  redditFetchWorkflow,
+  runRedditFetch,
+  type RedditFetchDeps,
+  type RedditFetchStats,
+} from './reddit-fetch.js';

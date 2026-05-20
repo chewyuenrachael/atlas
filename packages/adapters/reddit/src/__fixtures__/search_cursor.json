@@ -1,0 +1,82 @@
+{
+  "kind": "Listing",
+  "data": {
+    "after": "t3_def456",
+    "children": [
+      {
+        "kind": "t3",
+        "data": {
+          "id": "abc123",
+          "subreddit": "cursor",
+          "subreddit_name_prefixed": "r/cursor",
+          "title": "Cursor 0.45 just shipped — Composer feels much faster",
+          "selftext": "Just upgraded the Cursor IDE and the new composer is noticeably snappier on bigger codebases. Pairing it with Claude for refactoring has been a great workflow.",
+          "author": "vibe_coder",
+          "author_fullname": "t2_aaaaa1",
+          "created_utc": 1748952000,
+          "score": 412,
+          "num_comments": 87,
+          "permalink": "/r/cursor/comments/abc123/cursor_045_just_shipped/",
+          "url": "https://www.reddit.com/r/cursor/comments/abc123/cursor_045_just_shipped/",
+          "is_self": true,
+          "link_flair_text": "Discussion",
+          "removed_by_category": null,
+          "over_18": false
+        }
+      },
+      {
+        "kind": "t3",
+        "data": {
+          "id": "def456",
+          "subreddit": "MachineLearning",
+          "subreddit_name_prefixed": "r/MachineLearning",
+          "title": "Has anyone benchmarked Cursor's autocomplete latency vs Copilot?",
+          "selftext": "Curious if anyone has hard numbers on the Cursor IDE's tab autocomplete latency compared to GitHub Copilot. Looking at adopting one for our team.",
+          "author": "[deleted]",
+          "created_utc": 1748955000,
+          "score": 89,
+          "num_comments": 23,
+          "permalink": "/r/MachineLearning/comments/def456/cursor_autocomplete_benchmarks/",
+          "is_self": true,
+          "removed_by_category": null
+        }
+      },
+      {
+        "kind": "t3",
+        "data": {
+          "id": "ghi789",
+          "subreddit": "programming",
+          "subreddit_name_prefixed": "r/programming",
+          "title": "How to use a cursor with SQL fetchmany for pagination",
+          "selftext": "I need to paginate through 10M rows in postgres using a server-side cursor. Here is what I tried with psycopg2 fetchmany.",
+          "author": "db_explorer",
+          "author_fullname": "t2_bbbbb2",
+          "created_utc": 1748960000,
+          "score": 27,
+          "num_comments": 8,
+          "permalink": "/r/programming/comments/ghi789/sql_cursor_pagination/",
+          "is_self": true,
+          "removed_by_category": null
+        }
+      },
+      {
+        "kind": "t3",
+        "data": {
+          "id": "jkl012",
+          "subreddit": "webdev",
+          "subreddit_name_prefixed": "r/webdev",
+          "title": "Cursor IDE vs WebStorm for a TypeScript-heavy app",
+          "selftext": "Switching teams and we're evaluating editors. Anyone moved from WebStorm to the Cursor editor for a large TS codebase?",
+          "author": "ts_migrator",
+          "author_fullname": "t2_ccccc3",
+          "created_utc": 1748965000,
+          "score": 156,
+          "num_comments": 41,
+          "permalink": "/r/webdev/comments/jkl012/cursor_vs_webstorm/",
+          "is_self": true,
+          "removed_by_category": null
+        }
+      }
+    ]
+  }
+}
