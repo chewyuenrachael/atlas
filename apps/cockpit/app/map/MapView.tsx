@@ -326,7 +326,7 @@ export function MapView({ mapboxToken, cities, allCitySignals, events }: MapView
   // -------------------------------------------------------------------------
   return (
     <div className="relative h-[calc(100vh-49px)] w-full">
-      <div ref={containerRef} className="absolute inset-0" />
+      <div ref={containerRef} className="h-full w-full" />
       <MapLegend />
       <MapStatusBadge cities={cities.length} events={events.length} />
       <SidePanel
