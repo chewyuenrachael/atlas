@@ -7,12 +7,14 @@
  * interactive bits (pan, zoom, marker clicks, side panel).
  *
  * Filters applied here:
- *   - Cities:  ambassador_count > 0 AND latitude/longitude not null. The
- *              cockpit treats "ambassador city" as cities that have at
- *              least one ambassador (or regional lead) living there.
- *   - Events:  latitude/longitude not null. Events without a known venue
- *              city (or with a city missing from city_coordinates) are
- *              skipped on the map — they still appear at /tables.
+ *   - Cities:  total_event_count > 0 (or ambassador_count > 0 when present)
+ *              AND latitude/longitude not null. Phase 1D Luma data has no
+ *              lifecycle_stage=ambassador rows yet, so we plot every city
+ *              that has hosted at least one event. Once ambassadors land,
+ *              cities with ambassadors still qualify via the OR branch.
+ *   - Events:  latitude/longitude not null. Events without a resolvable
+ *              venue city are skipped on the map — they still appear at
+ *              /tables.
  *
  * SPEC.md §7 (Query Layer), §6.4 (Materialized Views).
  */
@@ -53,17 +55,18 @@ export default async function MapPage() {
     );
   }
 
-  // Only plot cities that have at least one ambassador or regional lead.
-  // The view returns ambassador_count = 0 cities too (still useful for
-  // signal queries); we keep them out of the map's "ambassador city"
-  // layer to match the brief.
-  const ambassadorCities = citiesResult.value.filter((c) => c.ambassador_count > 0);
+  // Plot cities with community activity: hosted events and/or ambassadors.
+  // Phase 1D has events but no ambassador lifecycle rows yet; requiring
+  // ambassador_count > 0 alone would zero out the city layer.
+  const mapCities = citiesResult.value.filter(
+    (c) => c.total_event_count > 0 || c.ambassador_count > 0,
+  );
   const events = eventsResult.value;
 
   return (
     <MapView
       mapboxToken={mapboxToken}
-      cities={ambassadorCities}
+      cities={mapCities}
       allCitySignals={citiesResult.value}
       events={events}
     />

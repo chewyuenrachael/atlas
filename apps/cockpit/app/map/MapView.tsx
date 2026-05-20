@@ -366,13 +366,13 @@ function MapLegend(): JSX.Element {
         </div>
       </div>
       <div>
-        <div className="mb-1 text-neutral-400">Ambassador cities</div>
+        <div className="mb-1 text-neutral-400">Event cities</div>
         <div className="flex items-center gap-2">
           <span
             aria-hidden
             className="inline-block h-3 w-3 rounded-full border border-amber-400 bg-amber-400/30"
           />
-          <span className="text-neutral-300">size = total events in city</span>
+          <span className="text-neutral-300">size = events hosted in city</span>
         </div>
       </div>
     </div>
