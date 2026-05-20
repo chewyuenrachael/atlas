@@ -1,0 +1,27 @@
+{
+  "id": 7100002,
+  "node_id": "R_kgDOAAAACODE",
+  "name": "fintech-tools",
+  "full_name": "carol/fintech-tools",
+  "owner": {
+    "login": "carol",
+    "id": 100102,
+    "type": "User",
+    "html_url": "https://github.com/carol",
+    "avatar_url": "https://avatars.githubusercontent.com/u/100102"
+  },
+  "private": false,
+  "fork": false,
+  "archived": false,
+  "description": "Internal tooling for fintech workflows.",
+  "html_url": "https://github.com/carol/fintech-tools",
+  "language": "TypeScript",
+  "stargazers_count": 12,
+  "watchers_count": 12,
+  "forks_count": 1,
+  "topics": ["fintech", "tooling"],
+  "default_branch": "main",
+  "pushed_at": "2026-05-19T09:00:00Z",
+  "created_at": "2025-02-10T00:00:00Z",
+  "updated_at": "2026-05-19T09:00:00Z"
+}

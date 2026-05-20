@@ -11,3 +11,15 @@ export {
   type LumaIngestDeps,
   type LumaIngestStats,
 } from './luma-ingest-pipeline.js';
+export {
+  githubProfileRefresh,
+  runGithubProfileRefresh,
+  type GithubProfileRefreshDeps,
+  type GithubProfileRefreshStats,
+} from './github-profile-refresh.js';
+export {
+  githubRepoSearch,
+  runGithubRepoSearch,
+  type GithubRepoSearchDeps,
+  type GithubRepoSearchStats,
+} from './github-repo-search.js';

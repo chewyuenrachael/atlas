@@ -1,0 +1,27 @@
+{
+  "id": 7100001,
+  "node_id": "R_kgDOAAAAREADME",
+  "name": "awesome-cursor",
+  "full_name": "brunot/awesome-cursor",
+  "owner": {
+    "login": "brunot",
+    "id": 100101,
+    "type": "User",
+    "html_url": "https://github.com/brunot",
+    "avatar_url": "https://avatars.githubusercontent.com/u/100101"
+  },
+  "private": false,
+  "fork": false,
+  "archived": false,
+  "description": "A curated list of resources for the Cursor IDE.",
+  "html_url": "https://github.com/brunot/awesome-cursor",
+  "language": "Markdown",
+  "stargazers_count": 1450,
+  "watchers_count": 1450,
+  "forks_count": 187,
+  "topics": ["cursor", "awesome", "ide"],
+  "default_branch": "main",
+  "pushed_at": "2026-05-18T15:00:00Z",
+  "created_at": "2024-06-01T00:00:00Z",
+  "updated_at": "2026-05-18T15:00:00Z"
+}

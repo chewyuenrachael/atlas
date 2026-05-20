@@ -1,0 +1,27 @@
+{
+  "id": 7100003,
+  "node_id": "R_kgDOAAAAPRIVATE",
+  "name": "secret-cursor-internal",
+  "full_name": "internalorg/secret-cursor-internal",
+  "owner": {
+    "login": "internalorg",
+    "id": 100103,
+    "type": "Organization",
+    "html_url": "https://github.com/internalorg",
+    "avatar_url": "https://avatars.githubusercontent.com/u/100103"
+  },
+  "private": true,
+  "fork": false,
+  "archived": false,
+  "description": "Internal Cursor experiments. Confidential.",
+  "html_url": "https://github.com/internalorg/secret-cursor-internal",
+  "language": "TypeScript",
+  "stargazers_count": 0,
+  "watchers_count": 0,
+  "forks_count": 0,
+  "topics": ["cursor"],
+  "default_branch": "main",
+  "pushed_at": "2026-05-15T00:00:00Z",
+  "created_at": "2025-01-01T00:00:00Z",
+  "updated_at": "2026-05-15T00:00:00Z"
+}

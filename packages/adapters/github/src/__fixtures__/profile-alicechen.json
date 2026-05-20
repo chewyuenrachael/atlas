@@ -1,0 +1,18 @@
+{
+  "login": "alicechen",
+  "id": 100001,
+  "name": "Alice Chen",
+  "bio": "Senior engineer at JPMorgan Chase. linkedin.com/in/alicechenbuilds. Cursor ambassador.",
+  "company": "JPMorgan Chase",
+  "blog": "https://alicechen.dev",
+  "location": "San Francisco, CA",
+  "email": "alice.chen@example.com",
+  "twitter_username": "alicebuilds",
+  "avatar_url": "https://avatars.githubusercontent.com/u/100001",
+  "html_url": "https://github.com/alicechen",
+  "public_repos": 23,
+  "followers": 1842,
+  "following": 320,
+  "created_at": "2014-03-04T12:34:56Z",
+  "updated_at": "2026-05-15T10:00:00Z"
+}
