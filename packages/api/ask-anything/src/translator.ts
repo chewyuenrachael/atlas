@@ -11,7 +11,7 @@
 import { ATLAS_SCHEMA_BRIEF } from './schema-context.js';
 
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
-const ANTHROPIC_MODEL = 'claude-sonnet-4-7';
+const ANTHROPIC_MODEL = 'claude-sonnet-4-6';
 const ANTHROPIC_VERSION = '2023-06-01';
 const MAX_TOKENS = 600;
 
