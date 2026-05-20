@@ -1,0 +1,109 @@
+[
+  {
+    "kind": "Listing",
+    "data": {
+      "after": null,
+      "children": [
+        {
+          "kind": "t3",
+          "data": {
+            "id": "abc123",
+            "subreddit": "cursor",
+            "subreddit_name_prefixed": "r/cursor",
+            "title": "Cursor 0.45 just shipped — Composer feels much faster",
+            "selftext": "Just upgraded the Cursor IDE and the new composer is noticeably snappier on bigger codebases.",
+            "author": "vibe_coder",
+            "author_fullname": "t2_aaaaa1",
+            "created_utc": 1748952000,
+            "score": 412,
+            "num_comments": 4,
+            "permalink": "/r/cursor/comments/abc123/cursor_045_just_shipped/",
+            "is_self": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "kind": "Listing",
+    "data": {
+      "after": null,
+      "children": [
+        {
+          "kind": "t1",
+          "data": {
+            "id": "c1aaaa",
+            "parent_id": "t3_abc123",
+            "link_id": "t3_abc123",
+            "subreddit": "cursor",
+            "author": "agent_fan",
+            "author_fullname": "t2_ddddd4",
+            "body": "Agreed — the cursor agent loop with Claude is doing real work for me now. The new Composer is great.",
+            "created_utc": 1748952500,
+            "score": 64,
+            "permalink": "/r/cursor/comments/abc123/cursor_045_just_shipped/c1aaaa/",
+            "is_submitter": false
+          }
+        },
+        {
+          "kind": "t1",
+          "data": {
+            "id": "c2bbbb",
+            "parent_id": "t3_abc123",
+            "link_id": "t3_abc123",
+            "subreddit": "cursor",
+            "author": "[deleted]",
+            "body": "[removed]",
+            "created_utc": 1748952600,
+            "score": 1,
+            "permalink": "/r/cursor/comments/abc123/cursor_045_just_shipped/c2bbbb/",
+            "removed": true
+          }
+        },
+        {
+          "kind": "t1",
+          "data": {
+            "id": "c3cccc",
+            "parent_id": "t1_c1aaaa",
+            "link_id": "t3_abc123",
+            "subreddit": "cursor",
+            "author": "skeptic_dev",
+            "author_fullname": "t2_eeeee5",
+            "body": "Have you actually measured the Cursor autocomplete latency though? I find Copilot faster on my mac.",
+            "created_utc": 1748952800,
+            "score": 12,
+            "permalink": "/r/cursor/comments/abc123/cursor_045_just_shipped/c3cccc/",
+            "is_submitter": false
+          }
+        },
+        {
+          "kind": "t1",
+          "data": {
+            "id": "c4dddd",
+            "parent_id": "t3_abc123",
+            "link_id": "t3_abc123",
+            "subreddit": "cursor",
+            "author": "unrelated_user",
+            "author_fullname": "t2_fffff6",
+            "body": "Off topic but is anyone here on the new MacBook Pro M4? My battery is draining fast.",
+            "created_utc": 1748953000,
+            "score": 3,
+            "permalink": "/r/cursor/comments/abc123/cursor_045_just_shipped/c4dddd/",
+            "is_submitter": false
+          }
+        },
+        {
+          "kind": "more",
+          "data": {
+            "count": 42,
+            "name": "t1_morexxx",
+            "id": "morexxx",
+            "parent_id": "t3_abc123",
+            "depth": 0,
+            "children": ["xxx1", "xxx2"]
+          }
+        }
+      ]
+    }
+  }
+]
