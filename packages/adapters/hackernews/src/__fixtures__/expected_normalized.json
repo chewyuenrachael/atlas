@@ -1,0 +1,191 @@
+[
+  {
+    "recordType": "communication",
+    "sourcePlatform": "hackernews",
+    "sourceRecordId": "43210001",
+    "payload": {
+      "hn_item_id": "43210001",
+      "item_type": "story",
+      "title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "author_handle": "amanrs",
+      "content_text": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "content_url": "https://cursor.com/blog/1-0",
+      "permalink": "https://news.ycombinator.com/item?id=43210001",
+      "posted_at": "2026-05-15T18:23:00Z",
+      "posted_at_unix": 1778783780,
+      "points": 387,
+      "num_comments": 142,
+      "parent_id": "undefined",
+      "story_id": "43210001",
+      "is_about_cursor": true,
+      "topic_tags": [
+        "story"
+      ],
+      "payload_hash": "fixed-hash-for-tests"
+    },
+    "observedAt": "2026-05-15T18:23:00Z"
+  },
+  {
+    "recordType": "person",
+    "sourcePlatform": "hackernews",
+    "sourceRecordId": "hackernews:amanrs",
+    "payload": {
+      "canonical_name": "amanrs",
+      "names_seen": [
+        "amanrs"
+      ],
+      "hn_handle": "amanrs",
+      "hn_profile_url": "https://news.ycombinator.com/user?id=amanrs",
+      "platform_identities": [
+        {
+          "platform": "hackernews",
+          "handle": "amanrs",
+          "profile_url": "https://news.ycombinator.com/user?id=amanrs"
+        }
+      ],
+      "observed_role": "commenter"
+    },
+    "observedAt": "2026-05-20T12:00:00.000Z"
+  },
+  {
+    "recordType": "communication",
+    "sourcePlatform": "hackernews",
+    "sourceRecordId": "43210010",
+    "payload": {
+      "hn_item_id": "43210010",
+      "item_type": "comment",
+      "author_handle": "devbyemma",
+      "content_text": "Composer 2.5 finally nails multi-file refactors in our Rust workspace.",
+      "content_url": "https://news.ycombinator.com/item?id=43210010",
+      "permalink": "https://news.ycombinator.com/item?id=43210010",
+      "posted_at": "2026-05-15T19:04:11Z",
+      "posted_at_unix": 1778786251,
+      "parent_id": "43210001",
+      "story_id": "43210001",
+      "story_title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "story_url": "https://cursor.com/blog/1-0",
+      "is_about_cursor": true,
+      "topic_tags": [
+        "comment"
+      ],
+      "payload_hash": "fixed-hash-for-tests"
+    },
+    "observedAt": "2026-05-15T19:04:11Z"
+  },
+  {
+    "recordType": "person",
+    "sourcePlatform": "hackernews",
+    "sourceRecordId": "hackernews:devbyemma",
+    "payload": {
+      "canonical_name": "devbyemma",
+      "names_seen": [
+        "devbyemma"
+      ],
+      "hn_handle": "devbyemma",
+      "hn_profile_url": "https://news.ycombinator.com/user?id=devbyemma",
+      "platform_identities": [
+        {
+          "platform": "hackernews",
+          "handle": "devbyemma",
+          "profile_url": "https://news.ycombinator.com/user?id=devbyemma"
+        }
+      ],
+      "observed_role": "commenter"
+    },
+    "observedAt": "2026-05-20T12:00:00.000Z"
+  },
+  {
+    "recordType": "communication",
+    "sourcePlatform": "hackernews",
+    "sourceRecordId": "43210011",
+    "payload": {
+      "hn_item_id": "43210011",
+      "item_type": "comment",
+      "author_handle": "grizzly_dev",
+      "content_text": "Has anyone benchmarked Cursor against Continue.dev for completion latency?",
+      "content_url": "https://news.ycombinator.com/item?id=43210011",
+      "permalink": "https://news.ycombinator.com/item?id=43210011",
+      "posted_at": "2026-05-15T19:42:55Z",
+      "posted_at_unix": 1778788575,
+      "parent_id": "43210001",
+      "story_id": "43210001",
+      "story_title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "story_url": "https://cursor.com/blog/1-0",
+      "is_about_cursor": true,
+      "topic_tags": [
+        "comment"
+      ],
+      "payload_hash": "fixed-hash-for-tests"
+    },
+    "observedAt": "2026-05-15T19:42:55Z"
+  },
+  {
+    "recordType": "person",
+    "sourcePlatform": "hackernews",
+    "sourceRecordId": "hackernews:grizzly_dev",
+    "payload": {
+      "canonical_name": "grizzly_dev",
+      "names_seen": [
+        "grizzly_dev"
+      ],
+      "hn_handle": "grizzly_dev",
+      "hn_profile_url": "https://news.ycombinator.com/user?id=grizzly_dev",
+      "platform_identities": [
+        {
+          "platform": "hackernews",
+          "handle": "grizzly_dev",
+          "profile_url": "https://news.ycombinator.com/user?id=grizzly_dev"
+        }
+      ],
+      "observed_role": "commenter"
+    },
+    "observedAt": "2026-05-20T12:00:00.000Z"
+  },
+  {
+    "recordType": "communication",
+    "sourcePlatform": "hackernews",
+    "sourceRecordId": "43210012",
+    "payload": {
+      "hn_item_id": "43210012",
+      "item_type": "comment",
+      "author_handle": "quinoa42",
+      "content_text": "Reply to grizzly_dev: in my testing Cursor's Tab is noticeably faster, probably their custom speculative decoding.",
+      "content_url": "https://news.ycombinator.com/item?id=43210012",
+      "permalink": "https://news.ycombinator.com/item?id=43210012",
+      "posted_at": "2026-05-15T20:01:33Z",
+      "posted_at_unix": 1778789693,
+      "parent_id": "43210011",
+      "story_id": "43210001",
+      "story_title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "story_url": "https://cursor.com/blog/1-0",
+      "is_about_cursor": true,
+      "topic_tags": [
+        "comment"
+      ],
+      "payload_hash": "fixed-hash-for-tests"
+    },
+    "observedAt": "2026-05-15T20:01:33Z"
+  },
+  {
+    "recordType": "person",
+    "sourcePlatform": "hackernews",
+    "sourceRecordId": "hackernews:quinoa42",
+    "payload": {
+      "canonical_name": "quinoa42",
+      "names_seen": [
+        "quinoa42"
+      ],
+      "hn_handle": "quinoa42",
+      "hn_profile_url": "https://news.ycombinator.com/user?id=quinoa42",
+      "platform_identities": [
+        {
+          "platform": "hackernews",
+          "handle": "quinoa42",
+          "profile_url": "https://news.ycombinator.com/user?id=quinoa42"
+        }
+      ],
+      "observed_role": "commenter"
+    },
+    "observedAt": "2026-05-20T12:00:00.000Z"
+  }
+]

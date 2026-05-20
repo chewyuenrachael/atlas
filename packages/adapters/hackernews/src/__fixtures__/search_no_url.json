@@ -1,0 +1,39 @@
+{
+  "hits": [
+    {
+      "_highlightResult": {
+        "story_text": {
+          "matchLevel": "full",
+          "matchedWords": ["cursor"],
+          "value": "I've been using <em>Cursor</em> daily for six months..."
+        },
+        "title": {
+          "matchLevel": "full",
+          "matchedWords": ["cursor"],
+          "value": "Ask HN: How are you using <em>Cursor</em> in large monorepos?"
+        }
+      },
+      "_tags": ["story", "author_pollylang", "story_43210050", "ask_hn"],
+      "author": "pollylang",
+      "children": [],
+      "created_at": "2026-05-16T09:11:00Z",
+      "created_at_i": 1778835060,
+      "num_comments": 28,
+      "objectID": "43210050",
+      "points": 64,
+      "story_id": 43210050,
+      "story_text": "I've been using Cursor daily for six months in a 400k-line TypeScript monorepo. Composer is great for new code but I want to hear how others wrangle context across packages. Sharing patterns that worked and didn't.",
+      "title": "Ask HN: How are you using Cursor in large monorepos?",
+      "updated_at": "2026-05-16T09:11:00Z",
+      "url": null
+    }
+  ],
+  "hitsPerPage": 20,
+  "nbHits": 1,
+  "nbPages": 1,
+  "page": 0,
+  "params": "query=cursor&tags=(story,comment)&hitsPerPage=20&page=0",
+  "processingTimeMS": 3,
+  "query": "cursor",
+  "serverTimeMS": 3
+}

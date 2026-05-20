@@ -1,0 +1,34 @@
+{
+  "hits": [
+    {
+      "_highlightResult": {
+        "title": {
+          "matchLevel": "full",
+          "matchedWords": ["cursor"],
+          "value": "Show HN: <em>Cursor</em> 1.0 - The AI Code Editor"
+        }
+      },
+      "_tags": ["story", "author_amanrs", "story_43210001"],
+      "author": "amanrs",
+      "children": [43210010, 43210011, 43210012],
+      "created_at": "2026-05-15T18:23:00Z",
+      "created_at_i": 1778783780,
+      "num_comments": 142,
+      "objectID": "43210001",
+      "points": 387,
+      "story_id": 43210001,
+      "story_text": null,
+      "title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "updated_at": "2026-05-15T22:00:00Z",
+      "url": "https://cursor.com/blog/1-0"
+    }
+  ],
+  "hitsPerPage": 20,
+  "nbHits": 1,
+  "nbPages": 1,
+  "page": 0,
+  "params": "query=cursor&tags=(story,comment)&hitsPerPage=20&page=0",
+  "processingTimeMS": 4,
+  "query": "cursor",
+  "serverTimeMS": 4
+}

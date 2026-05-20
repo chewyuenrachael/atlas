@@ -11,3 +11,9 @@ export {
   type LumaIngestDeps,
   type LumaIngestStats,
 } from './luma-ingest-pipeline.js';
+export {
+  hackernewsFetch,
+  runHackernewsFetch,
+  type HackernewsFetchDeps,
+  type HackernewsFetchStats,
+} from './hackernews-fetch.js';
