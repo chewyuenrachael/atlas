@@ -7,6 +7,7 @@ import Link from 'next/link';
 const LINKS: { href: string; label: string }[] = [
   { href: '/map', label: 'Map' },
   { href: '/tables', label: 'Tables' },
+  { href: '/ask', label: 'Ask' },
 ];
 
 export function Nav(): JSX.Element {

@@ -11,6 +11,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@atlas/api-ask-anything": "workspace:*",
     "@atlas/core": "workspace:*",
     "@atlas/db": "workspace:*",
     "next": "14.2.15",
