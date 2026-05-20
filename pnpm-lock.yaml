@@ -65,6 +65,9 @@ importers:
 
   apps/cockpit:
     dependencies:
+      '@atlas/api-ask-anything':
+        specifier: workspace:*
+        version: link:../../packages/api/ask-anything
       '@atlas/core':
         specifier: workspace:*
         version: link:../../packages/core

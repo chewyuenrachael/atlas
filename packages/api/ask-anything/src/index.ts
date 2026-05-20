@@ -1,6 +1,12 @@
 /**
- * Natural-language query interface (NL -> SQL -> formatted answer).
+ * Public surface of `@atlas/api-ask-anything`.
  *
- * Phase 0 scaffold only. Implemented in Phase 3 per SPEC.md §7.3.
+ * Cockpit imports `handleAsk` for the `/api/queries/natural-language`
+ * route, and `CHIPS` for the chip strip at the top of `/ask`. Everything
+ * else is internal.
  */
-export {};
+export { CHIPS, type ChipDef, findChipById } from './chips.js';
+export { handleAsk, type AskRequest, type AskResponse } from './handler.js';
+export { runChip, clearChipCache, type RunChipResult } from './chip-cache.js';
+export { runSelect, type ColumnMeta, type QueryRunResult } from './executor.js';
+export { translateQuestionToSql, type TranslateResult } from './translator.js';
