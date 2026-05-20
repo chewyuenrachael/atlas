@@ -1,13 +1,35 @@
 /**
- * Hacker News adapter — Phase 0 scaffold only.
+ * @atlas/adapter-hackernews — public surface.
  *
- * Phase 2 implements:
- *   - `fetchPage` against the Hacker News source (see SPEC.md §5.2.6)
- *   - `persistRaw` into the raw_hackernews table
- *   - `normalizeRaw` into NormalizedRecord[]
- *
- * Follow the recipe in AGENTS.md "How to add a new adapter".
- *
- * Rate limit comes from `RATE_LIMIT_HACKERNEWS` in @atlas/core/constants.
+ * See SPEC.md §5.2.6 (source contract) and AGENTS.md §4 (recipe).
  */
 export const ADAPTER_NAME = 'hackernews';
+
+export {
+  HackerNewsAdapter,
+  InMemoryRawHackerNewsStore,
+  type HackerNewsAdapterOptions,
+  type RawHackerNewsStore,
+} from './adapter.js';
+export {
+  AlgoliaHackerNewsClient,
+  ALGOLIA_HN_BASE_URL,
+  DEFAULT_HN_QUERY,
+  DEFAULT_HN_TAGS,
+  DEFAULT_HITS_PER_PAGE,
+  type AlgoliaHackerNewsClientOptions,
+  type SearchParams,
+} from './client.js';
+export {
+  normalizeHackerNewsItem,
+  classifyItemType,
+  isDeletedOrDead,
+  hnUserProfileUrl,
+  hnItemPermalink,
+} from './normalizer.js';
+export type {
+  HackerNewsAlgoliaHit,
+  HackerNewsAlgoliaResponse,
+  HackerNewsItemType,
+  RawHackerNewsItem,
+} from './types.js';

@@ -1,0 +1,32 @@
+{
+  "hits": [
+    {
+      "_highlightResult": {
+        "comment_text": {
+          "matchLevel": "full",
+          "matchedWords": ["cursor"],
+          "value": "Switched from VS Code to <em>Cursor</em> a month ago and Composer 2.5 is genuinely impressive."
+        }
+      },
+      "_tags": ["comment", "author_devbyemma", "story_43210001"],
+      "author": "devbyemma",
+      "comment_text": "Switched from VS Code to Cursor a month ago and Composer 2.5 is genuinely impressive. The diff-review flow alone is worth the price.",
+      "created_at": "2026-05-15T19:04:11Z",
+      "created_at_i": 1778786251,
+      "objectID": "43210010",
+      "parent_id": 43210001,
+      "story_id": 43210001,
+      "story_title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "story_url": "https://cursor.com/blog/1-0",
+      "updated_at": "2026-05-15T19:04:11Z"
+    }
+  ],
+  "hitsPerPage": 20,
+  "nbHits": 1,
+  "nbPages": 1,
+  "page": 0,
+  "params": "query=cursor&tags=(story,comment)&hitsPerPage=20&page=0",
+  "processingTimeMS": 3,
+  "query": "cursor",
+  "serverTimeMS": 3
+}

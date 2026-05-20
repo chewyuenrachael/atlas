@@ -1,0 +1,65 @@
+{
+  "hits": [
+    {
+      "_tags": ["story", "author_amanrs", "story_43210001"],
+      "author": "amanrs",
+      "created_at": "2026-05-15T18:23:00Z",
+      "created_at_i": 1778783780,
+      "num_comments": 142,
+      "objectID": "43210001",
+      "points": 387,
+      "story_id": 43210001,
+      "story_text": null,
+      "title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "updated_at": "2026-05-15T22:00:00Z",
+      "url": "https://cursor.com/blog/1-0"
+    },
+    {
+      "_tags": ["comment", "author_devbyemma", "story_43210001"],
+      "author": "devbyemma",
+      "comment_text": "Composer 2.5 finally nails multi-file refactors in our Rust workspace.",
+      "created_at": "2026-05-15T19:04:11Z",
+      "created_at_i": 1778786251,
+      "objectID": "43210010",
+      "parent_id": 43210001,
+      "story_id": 43210001,
+      "story_title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "story_url": "https://cursor.com/blog/1-0",
+      "updated_at": "2026-05-15T19:04:11Z"
+    },
+    {
+      "_tags": ["comment", "author_grizzly_dev", "story_43210001"],
+      "author": "grizzly_dev",
+      "comment_text": "Has anyone benchmarked Cursor against Continue.dev for completion latency?",
+      "created_at": "2026-05-15T19:42:55Z",
+      "created_at_i": 1778788575,
+      "objectID": "43210011",
+      "parent_id": 43210001,
+      "story_id": 43210001,
+      "story_title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "story_url": "https://cursor.com/blog/1-0",
+      "updated_at": "2026-05-15T19:42:55Z"
+    },
+    {
+      "_tags": ["comment", "author_quinoa42", "story_43210001"],
+      "author": "quinoa42",
+      "comment_text": "Reply to grizzly_dev: in my testing Cursor's Tab is noticeably faster, probably their custom speculative decoding.",
+      "created_at": "2026-05-15T20:01:33Z",
+      "created_at_i": 1778789693,
+      "objectID": "43210012",
+      "parent_id": 43210011,
+      "story_id": 43210001,
+      "story_title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "story_url": "https://cursor.com/blog/1-0",
+      "updated_at": "2026-05-15T20:01:33Z"
+    }
+  ],
+  "hitsPerPage": 20,
+  "nbHits": 4,
+  "nbPages": 1,
+  "page": 0,
+  "params": "query=cursor&tags=(story,comment)&hitsPerPage=20&page=0",
+  "processingTimeMS": 5,
+  "query": "cursor",
+  "serverTimeMS": 5
+}

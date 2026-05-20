@@ -1,0 +1,38 @@
+{
+  "hits": [
+    {
+      "_tags": ["comment", "story_43210001"],
+      "author": null,
+      "comment_text": "[deleted]",
+      "created_at": "2026-05-15T20:15:00Z",
+      "created_at_i": 1778790900,
+      "objectID": "43210099",
+      "parent_id": 43210001,
+      "story_id": 43210001,
+      "story_title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "story_url": "https://cursor.com/blog/1-0",
+      "updated_at": "2026-05-15T20:15:00Z"
+    },
+    {
+      "_tags": ["comment", "author_ghost42", "story_43210001"],
+      "author": "ghost42",
+      "comment_text": "[dead]",
+      "created_at": "2026-05-15T20:30:00Z",
+      "created_at_i": 1778791800,
+      "objectID": "43210100",
+      "parent_id": 43210001,
+      "story_id": 43210001,
+      "story_title": "Show HN: Cursor 1.0 - The AI Code Editor",
+      "story_url": "https://cursor.com/blog/1-0",
+      "updated_at": "2026-05-15T20:30:00Z"
+    }
+  ],
+  "hitsPerPage": 20,
+  "nbHits": 2,
+  "nbPages": 1,
+  "page": 0,
+  "params": "query=cursor&tags=(story,comment)&hitsPerPage=20&page=0",
+  "processingTimeMS": 2,
+  "query": "cursor",
+  "serverTimeMS": 2
+}
