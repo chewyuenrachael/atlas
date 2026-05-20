@@ -154,9 +154,9 @@ function deriveContentText(
   hit: HackerNewsAlgoliaHit,
   itemType: HackerNewsItemType,
 ): string | null {
-  if (itemType === 'comment') return hit.comment_text;
-  if (hit.story_text !== null && hit.story_text.trim().length > 0) return hit.story_text;
-  return hit.title;
+  if (itemType === 'comment') return hit.comment_text ?? null;
+  if (hit.story_text != null && hit.story_text.trim().length > 0) return hit.story_text;
+  return hit.title ?? null;
 }
 
 /**

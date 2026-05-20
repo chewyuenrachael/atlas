@@ -17,3 +17,21 @@ export {
   type HackernewsFetchDeps,
   type HackernewsFetchStats,
 } from './hackernews-fetch.js';
+export {
+  hackernewsIngestPipeline,
+  runHackerNewsIngest,
+  type HackerNewsIngestDeps,
+  type HackerNewsIngestStats,
+} from './hackernews-ingest-pipeline.js';
+export {
+  redditIngestPipeline,
+  runRedditIngest,
+  type RedditIngestDeps,
+  type RedditIngestStats,
+} from './reddit-ingest-pipeline.js';
+export {
+  githubIngestPipeline,
+  runGithubIngest,
+  type GithubIngestDeps,
+  type GithubIngestStats,
+} from './github-ingest-pipeline.js';

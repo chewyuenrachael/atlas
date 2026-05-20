@@ -1,13 +1,60 @@
 /**
- * GitHub adapter — Phase 0 scaffold only.
+ * @atlas/adapter-github — public surface.
  *
- * Phase 2 implements:
- *   - `fetchPage` against the GitHub source (see SPEC.md §5.2.2)
- *   - `persistRaw` into the raw_github table
- *   - `normalizeRaw` into NormalizedRecord[]
+ * Two adapter modes share the package (SPEC.md §5.2.2):
  *
- * Follow the recipe in AGENTS.md "How to add a new adapter".
+ *   - {@link GithubProfileAdapter} refreshes known-ambassador profiles
+ *     (weekly cron).
+ *   - {@link GithubRepoSearchAdapter} finds Cursor-related repos and READMEs
+ *     (daily cron).
  *
- * Rate limit comes from `RATE_LIMIT_GITHUB` in @atlas/core/constants.
+ * Both adapters share the same {@link GithubClient} so we only authenticate
+ * against the GitHub API once per process.
  */
 export const ADAPTER_NAME = 'github';
+
+export {
+  createGithubClient,
+  GithubClient,
+  GITHUB_MISSING_TOKEN_CODE,
+  isMissingTokenError,
+  type CreateGithubClientOptions,
+  type GithubOctokitLike,
+  type GithubProfileResponse,
+  type GithubRepoResponse,
+  type RateLimitObservation,
+} from './client.js';
+
+export {
+  GithubProfileAdapter,
+  InMemoryRawGithubProfileStore,
+  type GithubProfileAdapterOptions,
+  type RawGithubProfileStore,
+} from './profile-adapter.js';
+
+export {
+  GithubRepoSearchAdapter,
+  InMemoryRawGithubRepoStore,
+  scoreRelevance,
+  type GithubRepoSearchAdapterOptions,
+  type RawGithubRepoStore,
+} from './repo-search-adapter.js';
+
+export { SupabaseRawGithubProfileStore } from './store-supabase-profile.js';
+export { SupabaseRawGithubRepoStore } from './store-supabase-repo.js';
+
+export {
+  computeCursorRelevance,
+  mentionsCursor,
+  normalizeGithubProfile,
+  normalizeGithubRepoMatch,
+} from './normalizer.js';
+
+export {
+  StaticAmbassadorSource,
+  type AmbassadorSource,
+  type CursorRelevance,
+  type RawGithubProfile,
+  type RawGithubRepoMatch,
+  type RepoSearchOptions,
+} from './types.js';

@@ -1,0 +1,41 @@
+{
+  "kind": "Listing",
+  "data": {
+    "after": null,
+    "children": [
+      {
+        "kind": "t3",
+        "data": {
+          "id": "lla001",
+          "subreddit": "LocalLLaMA",
+          "subreddit_name_prefixed": "r/LocalLLaMA",
+          "title": "Running Cursor against a local llama.cpp endpoint",
+          "selftext": "Has anyone wired the Cursor editor up to a local LLM via the OpenAI-compatible llama-server endpoint? The agent loop and composer both seem to assume the cloud GPT/Claude models.",
+          "author": "edge_inference",
+          "author_fullname": "t2_local01",
+          "created_utc": 1748960000,
+          "score": 73,
+          "num_comments": 18,
+          "permalink": "/r/LocalLLaMA/comments/lla001/cursor_local_llama/",
+          "is_self": true
+        }
+      },
+      {
+        "kind": "t3",
+        "data": {
+          "id": "lla002",
+          "subreddit": "LocalLLaMA",
+          "subreddit_name_prefixed": "r/LocalLLaMA",
+          "title": "Best practices for moving the cursor in tmux",
+          "selftext": "Off topic for the sub but my tmux cursor keeps jumping around when I split panes. Anyone else?",
+          "author": "term_nerd",
+          "created_utc": 1748961000,
+          "score": 4,
+          "num_comments": 2,
+          "permalink": "/r/LocalLLaMA/comments/lla002/tmux_cursor/",
+          "is_self": true
+        }
+      }
+    ]
+  }
+}

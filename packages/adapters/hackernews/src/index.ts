@@ -11,6 +11,7 @@ export {
   type HackerNewsAdapterOptions,
   type RawHackerNewsStore,
 } from './adapter.js';
+export { SupabaseRawHackerNewsStore } from './store-supabase.js';
 export {
   AlgoliaHackerNewsClient,
   ALGOLIA_HN_BASE_URL,

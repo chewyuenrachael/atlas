@@ -488,3 +488,77 @@ export async function addPlatformIdentity(
     return err(toQueryError('addPlatformIdentity', result.error, { personId, identity }));
   return ok(undefined);
 }
+
+/** A typed Person→Person edge variety from SPEC.md §3.3.3. */
+export type PersonPersonEdgeType =
+  | 'mentions'
+  | 'replies_to'
+  | 'co_hosts_event'
+  | 'colleague_at_company'
+  | 'mentored_by'
+  | 'introduced_to';
+
+/**
+ * Upsert a typed Person→Person edge. Strength accumulates: on re-observation
+ * we bump `strength` by 1 and refresh `last_observed_at`.
+ *
+ * No-op for self-edges (`source === target`).
+ */
+export async function upsertPersonPersonEdge(input: {
+  source_person_id: UUID;
+  target_person_id: UUID;
+  edge_type: PersonPersonEdgeType;
+  observed_at?: string;
+  metadata?: Record<string, unknown>;
+}): Promise<Result<{ id: UUID; existed: boolean }, AtlasError>> {
+  if (input.source_person_id === input.target_person_id) {
+    return err(
+      new QueryError('upsertPersonPersonEdge: self-edges are not allowed', 'QUERY_VALIDATION_FAILED'),
+    );
+  }
+  const c = svc();
+  if (isErr(c)) return c;
+  const sb = c.value;
+  const observedAt = input.observed_at ?? new Date().toISOString();
+
+  const existing = await sb
+    .from('person_person_edge')
+    .select('id, strength')
+    .eq('source_person_id', input.source_person_id)
+    .eq('target_person_id', input.target_person_id)
+    .eq('edge_type', input.edge_type)
+    .maybeSingle();
+  if (existing.error)
+    return err(toQueryError('upsertPersonPersonEdge.lookup', existing.error, input));
+
+  if (existing.data) {
+    const row = existing.data as { id: UUID; strength: number };
+    const update = await sb
+      .from('person_person_edge')
+      .update({
+        strength: row.strength + 1,
+        last_observed_at: observedAt,
+        ...(input.metadata ? { metadata: input.metadata } : {}),
+      })
+      .eq('id', row.id);
+    if (update.error)
+      return err(toQueryError('upsertPersonPersonEdge.update', update.error, input));
+    return ok({ id: row.id, existed: true });
+  }
+
+  const insert = await sb
+    .from('person_person_edge')
+    .insert({
+      source_person_id: input.source_person_id,
+      target_person_id: input.target_person_id,
+      edge_type: input.edge_type,
+      strength: 1,
+      first_observed_at: observedAt,
+      last_observed_at: observedAt,
+      metadata: input.metadata ?? {},
+    })
+    .select('id')
+    .single();
+  if (insert.error) return err(toQueryError('upsertPersonPersonEdge.insert', insert.error, input));
+  return ok({ id: (insert.data as { id: UUID }).id, existed: false });
+}

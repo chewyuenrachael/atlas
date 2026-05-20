@@ -1,13 +1,34 @@
 /**
- * Reddit adapter — Phase 0 scaffold only.
+ * @atlas/adapter-reddit — public surface.
  *
- * Phase 2 implements:
- *   - `fetchPage` against the Reddit source (see SPEC.md §5.2.5)
- *   - `persistRaw` into the raw_reddit table
- *   - `normalizeRaw` into NormalizedRecord[]
- *
- * Follow the recipe in AGENTS.md "How to add a new adapter".
- *
- * Rate limit comes from `RATE_LIMIT_REDDIT` in @atlas/core/constants.
+ * See SPEC.md §5.2.5 (source contract) and AGENTS.md §4 (recipe).
  */
 export const ADAPTER_NAME = 'reddit';
+
+export {
+  RedditAdapter,
+  InMemoryRawRedditStore,
+  DEFAULT_SUBREDDITS,
+  type RedditAdapterOptions,
+  type RedditAdapterDeps,
+  type RawRedditStore,
+} from './adapter.js';
+export { SupabaseRawRedditStore } from './store-supabase.js';
+export { normalizeRedditItem } from './normalizer.js';
+export { computeCursorRelevance } from './relevance.js';
+export {
+  searchSubreddit,
+  fetchPostWithComments,
+  parseSearchListing,
+  parsePostThread,
+  type ClientOptions,
+  type SearchOptions,
+} from './client.js';
+export type {
+  CursorRelevance,
+  RawRedditItem,
+  RedditCommentData,
+  RedditEnvelope,
+  RedditPostData,
+  RedditThingKind,
+} from './types.js';

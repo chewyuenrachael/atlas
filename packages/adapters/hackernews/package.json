@@ -17,7 +17,8 @@
   },
   "dependencies": {
     "@atlas/core": "workspace:*",
-    "@atlas/adapters-shared": "workspace:*"
+    "@atlas/adapters-shared": "workspace:*",
+    "@atlas/db": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.19.2",

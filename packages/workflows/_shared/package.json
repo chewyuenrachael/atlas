@@ -18,6 +18,8 @@
     "@atlas/db": "workspace:*",
     "@atlas/adapter-luma": "workspace:*",
     "@atlas/adapter-hackernews": "workspace:*",
+    "@atlas/adapter-reddit": "workspace:*",
+    "@atlas/adapter-github": "workspace:*",
     "@atlas/intelligence-identity-resolution": "workspace:*",
     "inngest": "^3.27.0"
   },
