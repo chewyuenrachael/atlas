@@ -23,7 +23,8 @@
     "db:rollback": "node --env-file=.env --import tsx packages/db/src/rollback.ts",
     "db:smoke": "RUN_SMOKE_TESTS=1 node --env-file=.env node_modules/vitest/vitest.mjs run packages/db/src/__tests__/smoke.test.ts",
     "backfill:luma": "node --env-file=.env --import tsx scripts/backfill-luma.ts",
-    "verify:phase-1": "node --env-file=.env --import tsx scripts/verify-phase-1.ts"
+    "verify:phase-1": "node --env-file=.env --import tsx scripts/verify-phase-1.ts",
+    "refresh:views": "node --env-file=.env --import tsx scripts/refresh-views.ts"
   },
   "devDependencies": {
     "@atlas/adapter-luma": "workspace:*",

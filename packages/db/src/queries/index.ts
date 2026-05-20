@@ -12,3 +12,18 @@ export * as ArtifactQueries from './artifact.js';
 export * as ProgramQueries from './program.js';
 export * as SignalQueries from './signal.js';
 export * as AuditQueries from './audit.js';
+export * as ViewQueries from './views.js';
+// Re-export the row shapes returned by mv_* views at top level so cockpit
+// components can `import type { CitySignalRow } from '@atlas/db'` without
+// reaching through the ViewQueries namespace.
+export type {
+  CitySignalRow,
+  CitySignalQueryOptions,
+  EventOrganizerEntry,
+  EventWithOrganizersRow,
+  EventsWithOrganizersQueryOptions,
+  PersonActivitySummaryRow,
+  ViewRefreshResult,
+  RefreshAllReport,
+  MaterializedViewName,
+} from './views.js';
