@@ -30,6 +30,7 @@
     "verify:phase-1": "node --env-file=.env --import tsx scripts/verify-phase-1.ts",
     "verify:phase-2": "node --env-file=.env --import tsx scripts/verify-phase-2.ts",
     "reconcile:cross-platform": "node --env-file=.env --import tsx scripts/reconcile-cross-platform.ts",
+    "discover:findings": "node --env-file=.env --import tsx scripts/discover-findings.ts",
     "refresh:views": "node --env-file=.env --import tsx scripts/refresh-views.ts"
   },
   "devDependencies": {
